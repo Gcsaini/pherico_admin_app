@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "315583696265",
+    "project_id": "pherico-4a1e4",
+    "storage_bucket": "pherico-4a1e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315583696265:android:c36e4b17c6ae3637902558",
+        "android_client_info": {
+          "package_name": "com.example.pherico"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315583696265-pfgf03998em5u37p1i67puugudtb1j29.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4HbT726Ehmb-n0pfLOZXLM67LFnGlgV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315583696265-5qkg68vjjmabb4t63vqggvnvlkggk68k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "315583696265-m87n54kd2j1pvoteh7nm9v8rds6j47mv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.phericoAdminApp.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315583696265:android:0ea940dee952b2f2902558",
+        "android_client_info": {
+          "package_name": "com.example.pherico_admin_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315583696265-pfgf03998em5u37p1i67puugudtb1j29.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4HbT726Ehmb-n0pfLOZXLM67LFnGlgV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315583696265-5qkg68vjjmabb4t63vqggvnvlkggk68k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "315583696265-m87n54kd2j1pvoteh7nm9v8rds6j47mv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.phericoAdminApp.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

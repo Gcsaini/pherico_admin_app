@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>315583696265-m87n54kd2j1pvoteh7nm9v8rds6j47mv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.315583696265-m87n54kd2j1pvoteh7nm9v8rds6j47mv</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCFUy9GkVmExAVtoxb8wxumCeLtJGmUTFg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>315583696265</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.phericoAdminApp.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>pherico-4a1e4</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pherico-4a1e4.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:315583696265:ios:9f839b06e51534f4902558</string>
+</dict>
+</plist>
