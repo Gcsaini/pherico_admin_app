@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pherico_admin_app/config/my_color.dart';
-import 'package:pherico_admin_app/models/user.dart';
-import 'package:pherico_admin_app/screens/blogs/blogs.dart';
+import 'package:pherico_admin_app/screens/categories.dart';
+import 'package:pherico_admin_app/screens/sellers.dart';
 import 'package:pherico_admin_app/screens/users.dart';
 import 'package:pherico_admin_app/screens/web_setting.dart';
 import 'package:pherico_admin_app/utils/color.dart';
@@ -79,54 +79,51 @@ class MainHome extends StatelessWidget {
                   height: 8,
                 ),
                 const Divider(),
-                ListTile(
-                  visualDensity: const VisualDensity(vertical: -4),
-                  horizontalTitleGap: 0,
-                  leading: Icon(
-                    CupertinoIcons.gift_alt_fill,
-                    color: iconColor,
-                  ),
-                  title: const Text('Blogs'),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Get.to(() => const Blogs(),
-                        transition: Transition.leftToRight);
-                  },
-                ),
-                const Divider(),
-                ListTile(
-                  horizontalTitleGap: 0,
-                  visualDensity: const VisualDensity(vertical: -4),
-                  leading: Icon(
-                    CupertinoIcons.gear_solid,
-                    color: iconColor,
-                  ),
-                  title: const Text('Website Settings'),
-                  onTap: () {
+                MenuTile(
+                  CupertinoIcons.gear_solid,
+                  () {
                     Navigator.of(context).pop();
                     Get.to(
                       () => const WebSetting(),
-                      transition: Transition.leftToRight,
+                      transition: Transition.rightToLeft,
                     );
                   },
+                  'Website Settings',
                 ),
                 const Divider(),
-                ListTile(
-                  horizontalTitleGap: 0,
-                  visualDensity: const VisualDensity(vertical: -4),
-                  leading: Icon(
-                    CupertinoIcons.gear_solid,
-                    color: iconColor,
-                  ),
-                  title: const Text('Users'),
-                  onTap: () {
+                MenuTile(
+                  CupertinoIcons.person_crop_circle,
+                  () {
                     Navigator.of(context).pop();
                     Get.to(
                       () => const Users(),
-                      transition: Transition.leftToRight,
+                      transition: Transition.rightToLeft,
                     );
                   },
+                  'Users',
                 ),
+                const Divider(),
+                MenuTile(
+                  CupertinoIcons.person_3_fill,
+                  () {
+                    Navigator.of(context).pop();
+                    Get.to(
+                      () => const Sellers(),
+                      transition: Transition.rightToLeft,
+                    );
+                  },
+                  'Sellers',
+                ),
+                const Divider(),
+                MenuTile(
+                  CupertinoIcons.equal_circle_fill,
+                  () {
+                    Navigator.of(context);
+                    Get.to(() => const Categories(),
+                        transition: Transition.rightToLeft);
+                  },
+                  'Categories',
+                )
               ],
             ),
           ),
@@ -157,4 +154,17 @@ class MainHome extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget MenuTile(IconData icon, VoidCallback onTap, String title) {
+  return ListTile(
+    horizontalTitleGap: 0,
+    visualDensity: const VisualDensity(vertical: -4),
+    leading: Icon(
+      icon,
+      color: iconColor,
+    ),
+    title: Text(title),
+    onTap: onTap,
+  );
 }

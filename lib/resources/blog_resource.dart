@@ -41,4 +41,32 @@ class BlogResource {
       return false;
     }
   }
+
+  static Future<bool> updateBlog(
+      String author,
+      String profile,
+      String title,
+      String tags,
+      String desc1,
+      String desc2,
+      String image1,
+      String image2,
+      String docId) async {
+    try {
+      await firebaseFirestore.collection(blogCollection).doc(docId).update({
+        'updatedAt': DateTime.now().millisecondsSinceEpoch.toString(),
+        'title': title,
+        'desc1': desc1,
+        'desc2': desc2,
+        'author': author,
+        'authorProfile': profile,
+        'image1': image1,
+        'image2': image2,
+        'tags': tags
+      });
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }

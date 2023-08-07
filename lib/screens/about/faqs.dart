@@ -4,11 +4,24 @@ import 'package:get/get.dart';
 import 'package:pherico_admin_app/config/firebase_constants.dart';
 import 'package:pherico_admin_app/config/my_color.dart';
 import 'package:pherico_admin_app/screens/about/add-faq.dart';
+import 'package:pherico_admin_app/screens/about/edit-faq.dart';
+import 'package:pherico_admin_app/utils/toast_extension.dart';
+import 'package:pherico_admin_app/widgets/buttons/gradient_elevated_button.dart';
+import 'package:pherico_admin_app/widgets/buttons/outlined_button.dart';
 import 'package:pherico_admin_app/widgets/buttons/round_button_with_icon.dart';
 import 'package:pherico_admin_app/widgets/global/my_progress_indicator.dart';
 
-class Faqs extends StatelessWidget {
+class Faqs extends StatefulWidget {
   const Faqs({super.key});
+
+  @override
+  State<Faqs> createState() => _FaqsState();
+}
+
+class _FaqsState extends State<Faqs> {
+  showToaster(String msg, {bool isError = false}) {
+    context.showToast(msg, isError: isError);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +60,14 @@ class Faqs extends StatelessWidget {
                           ],
                         ),
                       ),
+                      const SizedBox(
+                        height: 16,
+                      ),
                       Expanded(
                         child:
-                            FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                          future: firebaseFirestore.collection('faq').get(),
+                            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                          stream:
+                              firebaseFirestore.collection('faq').snapshots(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -107,19 +124,118 @@ class Faqs extends StatelessWidget {
       itemCount: data.length,
       itemBuilder: (context, index) {
         return !data[index]['seller']
-            ? ExpansionTile(
-                title: Text(data[index]['question']),
-                iconColor: gradient1,
-                textColor: black,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                    child: Text(
-                      data[index]['ans'],
+            ? Dismissible(
+                key: Key(data[index]['id']),
+                background: Container(
+                  color: Colors.green,
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          " Edit",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
                     ),
-                  )
-                ],
+                  ),
+                ),
+                secondaryBackground: Container(
+                  color: Colors.red,
+                  child: const Align(
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          " Delete",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                confirmDismiss: (direction) async {
+                  if (direction == DismissDirection.endToStart) {
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content:
+                              const Text("Are you sure you want to delete ?"),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                MyOutlinedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  buttonName: 'Cancel',
+                                ),
+                                GradientElevatedButton(
+                                  buttonName: 'Delete',
+                                  onPressed: () async {
+                                    await firebaseFirestore
+                                        .collection('faq')
+                                        .doc(data[index]['id'])
+                                        .delete();
+                                    Get.back();
+                                    showToaster('Deleted');
+                                  },
+                                )
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    Get.to(
+                      () => EditFaq(
+                        data: data[index],
+                      ),
+                      transition: Transition.leftToRight,
+                    );
+                  }
+                },
+                child: ExpansionTile(
+                  title: Text(data[index]['question']),
+                  iconColor: gradient1,
+                  textColor: black,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 16),
+                      child: Text(
+                        data[index]['ans'],
+                      ),
+                    )
+                  ],
+                ),
               )
             : Container();
       },
@@ -132,19 +248,118 @@ class Faqs extends StatelessWidget {
       itemCount: data.length,
       itemBuilder: (context, index) {
         return data[index]['seller']
-            ? ExpansionTile(
-                title: Text(data[index]['question']),
-                iconColor: gradient1,
-                textColor: black,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                    child: Text(
-                      data[index]['ans'],
+            ? Dismissible(
+                key: Key(data[index]['id']),
+                background: Container(
+                  color: Colors.green,
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          " Edit",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
                     ),
-                  )
-                ],
+                  ),
+                ),
+                secondaryBackground: Container(
+                  color: Colors.red,
+                  child: const Align(
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          " Delete",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                confirmDismiss: (direction) async {
+                  if (direction == DismissDirection.endToStart) {
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content:
+                              const Text("Are you sure you want to delete ?"),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                MyOutlinedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  buttonName: 'Cancel',
+                                ),
+                                GradientElevatedButton(
+                                  buttonName: 'Delete',
+                                  onPressed: () async {
+                                    await firebaseFirestore
+                                        .collection('faq')
+                                        .doc(data[index]['id'])
+                                        .delete();
+                                    Get.back();
+                                    showToaster('Deleted');
+                                  },
+                                )
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    Get.to(
+                      () => EditFaq(
+                        data: data[index],
+                      ),
+                      transition: Transition.leftToRight,
+                    );
+                  }
+                },
+                child: ExpansionTile(
+                  title: Text(data[index]['question']),
+                  iconColor: gradient1,
+                  textColor: black,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 16),
+                      child: Text(
+                        data[index]['ans'],
+                      ),
+                    )
+                  ],
+                ),
               )
             : Container();
       },

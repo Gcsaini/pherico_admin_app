@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:pherico_admin_app/config/firebase_constants.dart';
 import 'package:pherico_admin_app/config/my_color.dart';
+import 'package:pherico_admin_app/models/seller/seller.dart';
 import 'package:pherico_admin_app/models/user.dart';
 import 'package:pherico_admin_app/utils/border.dart';
 import 'package:pherico_admin_app/widgets/global/app_bar_withour_back.dart';
@@ -11,8 +12,8 @@ import 'package:pherico_admin_app/widgets/global/image_popup.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
-class Users extends StatelessWidget {
-  const Users({super.key});
+class Sellers extends StatelessWidget {
+  const Sellers({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class Users extends StatelessWidget {
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(55),
         child: CustomAppbarWithourBack(
-          title: 'Users',
+          title: 'Sellers',
         ),
       ),
       body: SafeArea(
@@ -34,7 +35,7 @@ class Users extends StatelessWidget {
                 child: FormHelper.inputFieldWidget(
                   context,
                   'search',
-                  'Search user...',
+                  'Search seller...',
                   hintColor: HexColor('#4F5663'),
                   hintFontSize: 13,
                   showPrefixIcon: true,
@@ -62,10 +63,10 @@ class Users extends StatelessWidget {
               child: FirestoreListView<Map<String, dynamic>>(
                 pageSize: 20,
                 padding: const EdgeInsets.symmetric(horizontal: 4),
-                query: firebaseFirestore.collection(usersCollection),
+                query: firebaseFirestore.collection(storeCollection),
                 itemBuilder: (context, snapshot) {
-                  User user = User.fromMap(snapshot.data());
-                  return userCard(user, context);
+                  Seller seller = Seller.fromMap(snapshot.data());
+                  return userCard(seller, context);
                 },
               ),
             ),
@@ -76,7 +77,7 @@ class Users extends StatelessWidget {
   }
 }
 
-Widget userCard(User user, BuildContext context) {
+Widget userCard(Seller seller, BuildContext context) {
   return Card(
     elevation: 0.5,
     shape: borderShape(radius: 12),
@@ -89,12 +90,12 @@ Widget userCard(User user, BuildContext context) {
             onTap: () async {
               await showDialog(
                 context: context,
-                builder: (_) => ImagePopup(image: user.profile),
+                builder: (_) => ImagePopup(image: seller.profile),
               );
             },
             child: CircleAvatar(
               radius: 30.0,
-              backgroundImage: CachedNetworkImageProvider(user.profile),
+              backgroundImage: CachedNetworkImageProvider(seller.profile),
             ),
           ),
           const SizedBox(width: 16.0),
@@ -103,14 +104,12 @@ Widget userCard(User user, BuildContext context) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${user.firstName} ${user.lastName}',
+                  seller.shopName,
                   style: const TextStyle(
                       fontSize: 14.0, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4.0),
-                Text(user.email),
-                const SizedBox(height: 4.0),
-                Text(user.phone),
+                Text(seller.address),
               ],
             ),
           ),

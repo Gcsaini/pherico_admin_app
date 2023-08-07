@@ -17,7 +17,7 @@ import 'package:pherico_admin_app/widgets/global/app_bar.dart';
 import 'package:pherico_admin_app/widgets/global/my_progress_indicator.dart';
 
 class AddBlog extends StatefulWidget {
-  AddBlog({super.key});
+  const AddBlog({super.key});
 
   @override
   State<AddBlog> createState() => _AddBlogState();
@@ -46,6 +46,7 @@ class _AddBlogState extends State<AddBlog> {
       authors
           .add(Author(author: element['author'], profile: element['profile']));
     }
+    _selectedAuthor = authors[0];
     setState(() {});
   }
 

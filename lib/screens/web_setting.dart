@@ -9,6 +9,7 @@ import 'package:pherico_admin_app/screens/about/faqs.dart';
 import 'package:pherico_admin_app/screens/about/goal.dart';
 import 'package:pherico_admin_app/screens/about/mission.dart';
 import 'package:pherico_admin_app/screens/about/vision.dart';
+import 'package:pherico_admin_app/screens/blogs/blogs.dart';
 import 'package:pherico_admin_app/widgets/global/my_progress_indicator.dart';
 
 class WebSetting extends StatefulWidget {
@@ -46,21 +47,23 @@ class _WebSettingState extends State<WebSetting> {
                       children: [
                         Expanded(
                           child: GridView.builder(
-                            itemCount: 5,
+                            itemCount: 6,
                             itemBuilder: (context, index) {
                               List titles = [
                                 'About',
                                 'Mission',
                                 'Vision',
                                 'Goal',
-                                'Faq'
+                                'Faq',
+                                'Blogs'
                               ];
                               List colors = [
                                 gradient,
                                 linearGradient3,
                                 linearGradient1,
                                 linearGradient2,
-                                gradient
+                                gradient,
+                                linearGradient4
                               ];
                               final data = snapshot.data!.docs[0];
                               return box(size, titles[index], colors[index],
@@ -128,6 +131,9 @@ class _WebSettingState extends State<WebSetting> {
               }
               if (index == 4) {
                 Get.to(() => const Faqs(), transition: Transition.leftToRight);
+              }
+              if (index == 5) {
+                Get.to(() => const Blogs(), transition: Transition.leftToRight);
               }
             },
             child: Align(

@@ -6,22 +6,31 @@ import 'package:pherico_admin_app/screens/about/faqs.dart';
 import 'package:pherico_admin_app/utils/toast_extension.dart';
 import 'package:pherico_admin_app/widgets/buttons/round_button_with_icon.dart';
 import 'package:pherico_admin_app/widgets/global/my_progress_indicator.dart';
-import 'package:uuid/uuid.dart';
 
-class AddFaq extends StatefulWidget {
-  const AddFaq({super.key});
+class EditFaq extends StatefulWidget {
+  final data;
+  const EditFaq({super.key, this.data});
 
   @override
-  State<AddFaq> createState() => _AddFaqState();
+  State<EditFaq> createState() => _EditFaqState();
 }
 
-class _AddFaqState extends State<AddFaq> {
+class _EditFaqState extends State<EditFaq> {
   final TextEditingController _questionController = TextEditingController();
   final TextEditingController _ansController = TextEditingController();
   FaqType? _selectedType;
   bool _isLoading = false;
+
   showToaster(String msg, {bool isError = false}) {
     context.showToast(msg, isError: isError);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _questionController.text = widget.data['question'];
+    _ansController.text = widget.data['ans'];
+    _selectedType = widget.data['seller'] ? types[0] : types[1];
   }
 
   @override
@@ -85,7 +94,7 @@ class _AddFaqState extends State<AddFaq> {
                     ? const MyProgressIndicator()
                     : RoundButtonWithIcon(
                         height: 46,
-                        buttonName: 'Upload',
+                        buttonName: 'Edit',
                         onPressed: () {
                           handleSubmit();
                         },
@@ -107,16 +116,16 @@ class _AddFaqState extends State<AddFaq> {
       setState(() {
         _isLoading = true;
       });
-      String docId = const Uuid().v1();
       try {
-        await firebaseFirestore.collection('faq').doc(docId).set({
-          'id': docId,
+        await firebaseFirestore
+            .collection('faq')
+            .doc(widget.data['id'])
+            .update({
           'seller': _selectedType!.type == 'seller' ? true : false,
           'question': _questionController.text.trim(),
           'ans': _ansController.text.trim(),
-          'isWeb': true
         });
-        showToaster('Uploaded');
+        showToaster('Edit successfully');
         Get.off(() => const Faqs());
       } catch (error) {
         showToaster('Something went wrong', isError: true);

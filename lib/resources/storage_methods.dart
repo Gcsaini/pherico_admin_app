@@ -38,6 +38,14 @@ Future<String> uploadImage(
     ref = ref.child('lives').child(childName);
   }
 
+  if (type == 'blogs') {
+    ref = ref.child('blogs').child(childName);
+  }
+
+  if (type == 'category') {
+    ref = ref.child('category').child(childName);
+  }
+
   UploadTask task = ref.putData(file);
 
   TaskSnapshot snap = await task;

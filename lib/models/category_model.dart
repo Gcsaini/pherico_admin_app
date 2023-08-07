@@ -26,4 +26,12 @@ class CategoryModel with ChangeNotifier {
         id: snapshot['id'],
         status: snapshot["status"]);
   }
+
+  static CategoryModel fromMap(Map<String, dynamic> snapshot) {
+    return CategoryModel(
+        name: snapshot['name'],
+        image: snapshot['image'],
+        id: snapshot['id'],
+        status: snapshot["status"]);
+  }
 }

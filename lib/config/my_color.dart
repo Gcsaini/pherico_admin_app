@@ -53,6 +53,12 @@ LinearGradient linearGradient3 = LinearGradient(
   end: Alignment.bottomRight,
 );
 
+LinearGradient linearGradient4 = LinearGradient(
+  colors: [HexColor('#34e89e'), HexColor('#0f3443')],
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
+);
+
 Color shadowColorInput = const Color.fromARGB(255, 202, 203, 204);
 Color selectedCardColor = const Color.fromARGB(255, 184, 211, 238);
 Color iconColor = HexColor('#484C52');
