@@ -8,10 +8,11 @@ import 'package:pherico_admin_app/screens/sellers.dart';
 import 'package:pherico_admin_app/screens/users.dart';
 import 'package:pherico_admin_app/screens/web_setting.dart';
 import 'package:pherico_admin_app/utils/color.dart';
+import 'package:pherico_admin_app/widgets/global/inside_circle_svg.dart';
+import 'package:pherico_admin_app/widgets/home/recent_orders_widget.dart';
 import 'package:pherico_admin_app/widgets/home/sales.dart';
 import 'package:pherico_admin_app/widgets/home/top_five_product.dart';
-import 'package:pherico_admin_app/widgets/home/total_seller_tile.dart';
-import 'package:pherico_admin_app/widgets/home/total_users_tile.dart';
+import 'package:pherico_admin_app/widgets/home/total_sales_widget.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
 class MainHome extends StatelessWidget {
@@ -25,36 +26,40 @@ class MainHome extends StatelessWidget {
       appBar: AppBar(
         titleSpacing: 10,
         leadingWidth: 38,
+        centerTitle: true,
         leading: InkWell(
           child: Padding(
             padding: const EdgeInsets.only(left: 12.0),
             child: SvgPicture.asset(
               'assets/images/navigation-icon/3_line.svg',
-              colorFilter: svgColor(color: iconColor),
+              colorFilter: svgColor(color: white),
             ),
           ),
           onTap: () {
             scaffoldKey.currentState!.openDrawer();
           },
         ),
-        title: Image.asset(
-          'assets/images/logo/logo.png',
+        title: SvgPicture.asset(
+          'assets/images/icons/pherico_white.svg',
           fit: BoxFit.contain,
           width: 100,
+          height: 40,
         ),
         iconTheme: IconThemeData(color: iconColor),
-        backgroundColor: Colors.white,
+        backgroundColor: HexColor('#F9881F'),
         elevation: 0,
-        scrolledUnderElevation: 10,
+        scrolledUnderElevation: 0,
         actions: [
           IconButton(
             padding: const EdgeInsets.only(right: 16),
-            constraints: const BoxConstraints(),
             onPressed: () {},
             icon: SvgPicture.asset(
-              'assets/images/navigation-icon/bell.svg',
+              'assets/images/icons/bell.svg',
+              width: 80,
+              height: 80,
+              fit: BoxFit.contain,
               colorFilter: svgColor(
-                color: HexColor('#F76436'),
+                color: white,
               ),
             ),
           ),
@@ -69,17 +74,9 @@ class MainHome extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 4,
+                  height: 16,
                 ),
-                const Text(
-                  'Menus',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                const Divider(),
-                MenuTile(
+                menuTile(
                   CupertinoIcons.gear_solid,
                   () {
                     Navigator.of(context).pop();
@@ -90,8 +87,7 @@ class MainHome extends StatelessWidget {
                   },
                   'Website Settings',
                 ),
-                const Divider(),
-                MenuTile(
+                menuTile(
                   CupertinoIcons.person_crop_circle,
                   () {
                     Navigator.of(context).pop();
@@ -102,8 +98,7 @@ class MainHome extends StatelessWidget {
                   },
                   'Users',
                 ),
-                const Divider(),
-                MenuTile(
+                menuTile(
                   CupertinoIcons.person_3_fill,
                   () {
                     Navigator.of(context).pop();
@@ -114,8 +109,7 @@ class MainHome extends StatelessWidget {
                   },
                   'Sellers',
                 ),
-                const Divider(),
-                MenuTile(
+                menuTile(
                   CupertinoIcons.equal_circle_fill,
                   () {
                     Navigator.of(context);
@@ -123,32 +117,82 @@ class MainHome extends StatelessWidget {
                         transition: Transition.rightToLeft);
                   },
                   'Categories',
+                ),
+                menuTile(
+                  CupertinoIcons.square_arrow_right_fill,
+                  () {
+                    Navigator.of(context);
+                    Get.to(() => const Categories(),
+                        transition: Transition.rightToLeft);
+                  },
+                  'Logout',
                 )
               ],
             ),
           ),
         ),
       ),
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.all(12),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                TotalUserTiles(),
-                TotalSellerTiles(),
+                InsideCircleSvg(
+                  path: 'assets/images/icons/users.svg',
+                  onTap: () {
+                    Get.to(() => const Users(),
+                        transition: Transition.rightToLeft);
+                  },
+                  borderColor: HexColor('#F4F3F3'),
+                  label: 'Users',
+                ),
+                InsideCircleSvg(
+                  path: 'assets/images/icons/users.svg',
+                  onTap: () {
+                    Get.to(() => const Sellers(),
+                        transition: Transition.rightToLeft);
+                  },
+                  borderColor: HexColor('#F4F3F3'),
+                  label: 'Sellers',
+                ),
+                InsideCircleSvg(
+                  path: 'assets/images/icons/products.svg',
+                  onTap: () {},
+                  borderColor: HexColor('#F4F3F3'),
+                  label: 'Products',
+                ),
+                InsideCircleSvg(
+                  path: 'assets/images/icons/categories.svg',
+                  onTap: () {
+                    Get.to(() => const Categories(),
+                        transition: Transition.rightToLeft);
+                  },
+                  borderColor: HexColor('#F4F3F3'),
+                  label: 'Categories',
+                ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
+              height: 16,
+            ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TotalSales(),
+                RecentOrderWidget(),
+              ],
+            ),
+            const SizedBox(
               height: 12,
             ),
-            Sales(),
-            SizedBox(
+            const Sales(),
+            const SizedBox(
               height: 12,
             ),
-            TopFiveProduct(),
+            const TopFiveProduct(),
           ],
         ),
       ),
@@ -156,13 +200,13 @@ class MainHome extends StatelessWidget {
   }
 }
 
-Widget MenuTile(IconData icon, VoidCallback onTap, String title) {
+Widget menuTile(IconData icon, VoidCallback onTap, String title) {
   return ListTile(
-    horizontalTitleGap: 0,
-    visualDensity: const VisualDensity(vertical: -4),
+    horizontalTitleGap: 4,
     leading: Icon(
       icon,
       color: iconColor,
+      size: 30,
     ),
     title: Text(title),
     onTap: onTap,
